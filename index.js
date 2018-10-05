@@ -28,9 +28,9 @@ server.use(
 //     .send('<h1> 1,2 x you </h1>')
 // });
 server.post('/projects', (req, res) => {
-    const { name } = req.body;
-    const newProject = { name };
-    console.log(newProject);
+    const {name, description} = req.body;
+    const newProject = { name, description };
+    console.log(req.body);
     projectModel
     .insert(newProject)
     .then(projectId => {
@@ -75,7 +75,7 @@ server.put('/projects/:id', (req, res) => {
         .get(id)
         .then(foundProject => res.status(200).send(foundProject))
     })
-        .catch(err => res.status(500).send(null));
+        .catch(err => res.status(500).send(err,"null"));
 });
 
 server.delete('/projects/:id', (req, res) => {
@@ -93,8 +93,8 @@ server.delete('/projects/:id', (req, res) => {
 /////////actionModel Routes///////////////
 
 server.post('/actions', (req, res) => {
-    const { name } = req.body;
-    const newAction = { name };
+    const { description } = req.body;
+    const newAction = { description };
     console.log(newAction);
     actionModel
     .insert(newAction)
@@ -157,7 +157,7 @@ server.delete('/actions/:id', (req, res) => {
 
 
 
-const port = 7682;
+const port = 7000;
 
 server.listen(port, () =>
 console.log(`\n=== API is doing the thang on ${port} ===\n`)
