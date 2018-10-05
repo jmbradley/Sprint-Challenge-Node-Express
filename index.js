@@ -62,6 +62,25 @@ server.get('/projects', (req, res) => {
     .catch(err => res.send(err))
 });
 
+server.get('/projects/:id/actions', (req, res) => {
+    console.log(req.query);
+    const { id } = req.params;
+    
+    projectModel
+    .get(id)
+    .then(projects => {
+        res
+        .json(projects)
+    })
+    // actionModel
+    // .get(id)
+    // .then(actions => {
+    //     res
+    //     .json(actions)
+    // })
+    .catch(err => res.send(err))
+});
+
 server.put('/projects/:id', (req, res) => {
     console.log(req.query);
     const { id } = req.params;
@@ -90,11 +109,13 @@ server.delete('/projects/:id', (req, res) => {
     .catch(err => res.status(500).send(`Error Ya'll`))
 });
 
+
+
 /////////actionModel Routes///////////////
 
 server.post('/actions', (req, res) => {
-    const { description } = req.body;
-    const newAction = { description };
+    const { description, notes } = req.body;
+    const newAction = { description, notes };
     console.log(newAction);
     actionModel
     .insert(newAction)
@@ -127,7 +148,7 @@ server.get('/actions', (req, res) => {
     .catch(err => res.send(err))
 });
 
-server.put('/projects/:id', (req, res) => {
+server.put('/actions/:id', (req, res) => {
     console.log(req.query);
     const { id } = req.params;
     const { description } = req.body;
